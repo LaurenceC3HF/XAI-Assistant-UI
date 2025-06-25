@@ -1,6 +1,7 @@
 import React from 'react';
 import { VisualCard } from './VisualCard';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+import { featureInfoMap } from '../../data/featureMeta';
 
 interface SHAPVisualProps {
   shapData?: Record<string, number>;
@@ -26,7 +27,7 @@ export const SHAPVisual: React.FC<SHAPVisualProps> = ({ shapData }) => {
           <div key={feature} className="group">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
-                {feature}
+                {featureInfoMap[feature]?.label || feature}
               </span>
               <div className="flex items-center">
                 {value > 0 ? (
@@ -52,9 +53,3 @@ export const SHAPVisual: React.FC<SHAPVisualProps> = ({ shapData }) => {
                 `}
               />
             </div>
-          </div>
-        ))}
-      </div>
-    </VisualCard>
-  );
-};
