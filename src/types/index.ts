@@ -48,9 +48,23 @@ export interface XAIExplanation {
   suggestedPrompts?: string[];
 }
 
+export interface DAGNode {
+  id: string;
+  label: string;
+  group?: string;
+  description?: string;
+  importance?: string;
+  whatIf?: string;
+}
+
+export interface DAGEdge {
+  from: string;
+  to: string;
+}
+
 export interface DAGData {
-  nodes: Array<{ id: string; label: string }>;
-  edges: Array<{ from: string; to: string }>;
+  nodes: DAGNode[];
+  edges: DAGEdge[];
 }
 
 export interface AlternativeOutcome {

@@ -44,11 +44,45 @@ export const xaiExplanation: XAIExplanation = {
     text: "Threat correlation analysis:\n• Flight pattern matches 85% of known adversarial profiles\n• Speed increase suggests intentional course change\n• Communication silence indicates potential hostile intent\n• Geographic approach vector is tactically significant",
     dag: {
       nodes: [
-        { id: 'deviation', label: 'Flight Deviation' },
-        { id: 'speed', label: 'Speed Increase' },
-        { id: 'communication', label: 'ATC Silence' },
-        { id: 'geography', label: 'Approach Vector' },
-        { id: 'threat', label: 'Threat Assessment' }
+        {
+          id: 'deviation',
+          label: 'Flight Deviation',
+          group: 'Flight Data',
+          description: 'Deviation from original flight path',
+          importance: 'Indicates potential evasive manoeuvre',
+          whatIf: 'Less deviation lowers threat'
+        },
+        {
+          id: 'speed',
+          label: 'Speed Increase',
+          group: 'Flight Data',
+          description: 'Increase in aircraft speed',
+          importance: 'Suggests intentional course change',
+          whatIf: 'Slowing down may indicate compliance'
+        },
+        {
+          id: 'communication',
+          label: 'ATC Silence',
+          group: 'Communications',
+          description: 'No response to ATC calls',
+          importance: 'Silence often precedes hostile intent',
+          whatIf: 'Responding would ease concern'
+        },
+        {
+          id: 'geography',
+          label: 'Approach Vector',
+          group: 'Route',
+          description: 'Vector toward critical infrastructure',
+          importance: 'May indicate attack posture',
+          whatIf: 'Different route reduces suspicion'
+        },
+        {
+          id: 'threat',
+          label: 'Threat Assessment',
+          group: 'Assessment',
+          description: 'Overall threat evaluation',
+          importance: 'Aggregates indicators to gauge risk'
+        }
       ],
       edges: [
         { from: 'deviation', to: 'threat' },
