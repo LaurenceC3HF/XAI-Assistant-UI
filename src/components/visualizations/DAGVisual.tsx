@@ -41,9 +41,11 @@ export const DAGVisual: React.FC<DAGVisualProps> = ({ dagData }) => {
       
       <div className="relative h-64 bg-slate-900/30 rounded-lg p-4 overflow-hidden">
         {/* Nodes */}
-                {dagData.nodes.map(node => {
+        {dagData.nodes.map(node => {
           const meta = dagNodeInfo[node.id] || { group: 'Other' };
-          const color = groupColors[meta.group] || '#6b7280';
+          const classes = groupColors[meta.group] || 'bg-gray-500 border-gray-500';
+          const borderClass = classes.split(' ').find(c => c.startsWith('border-')) || '';
+          const textClass = borderClass.replace('border-', 'text-');
           return (
             <div
               key={node.id}
@@ -52,16 +54,15 @@ export const DAGVisual: React.FC<DAGVisualProps> = ({ dagData }) => {
               onClick={() => setActiveNode({ id: node.id, label: node.label, group: meta.group, description: meta.description, why: meta.why, whatIf: meta.whatIf })}
             >
               <div
-                className="bg-slate-700 border-2 px-4 py-3 rounded-lg text-center text-sm font-medium text-white shadow-lg transition-all duration-300"
-                style={{ borderColor: color }}
+                className={`bg-slate-700 border-2 px-4 py-3 rounded-lg text-center text-sm font-medium text-white shadow-lg transition-all duration-300 ${borderClass}`}
               >
                 <div className="flex items-center justify-center">
-                  <GitBranch className="w-4 h-4 mr-2" style={{ color }} />
+                  <GitBranch className={`w-4 h-4 mr-2 ${textClass}`} />
                   {node.label}
                 </div>
               </div>
             </div>
-              );
+            );
         })}
 
         {/* Edges */}
@@ -106,12 +107,15 @@ export const DAGVisual: React.FC<DAGVisualProps> = ({ dagData }) => {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-4">
-        {groups.map(g => (
-          <div key={g} className="flex items-center text-xs text-gray-300">
-            <span className="w-3 h-3 rounded-full mr-1" style={{ backgroundColor: groupColors[g] || '#6b7280' }} />
-            {g}
-          </div>
-        ))}
+        {groups.map(g => {
+          const classes = groupColors[g] || 'bg-gray-500 border-gray-500';
+          return (
+            <div key={g} className="flex items-center text-xs text-gray-300">
+              <span className={`w-3 h-3 rounded-full mr-1 border ${classes}`} />
+              {g}
+            </div>
+          );
+        })}
       </div>
 
       {activeNode && (
